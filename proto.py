@@ -2,7 +2,6 @@
 #See README for information on purpose and basic structure.
 
 #By Henry R. Wilson
-#WTFPL License
 
 def add(e1, e2):
     v1, d1 = e1.eget()
