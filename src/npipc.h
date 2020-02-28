@@ -17,7 +17,7 @@ typedef struct ent entry;
 #define STACK_MAX 16
 
 entry stack[STACK_MAX];
-int stack_top = 0;
+int stack_top = -1;
 
 void append_entry(double v, double d); //Add a new entry to the stack
 
@@ -28,6 +28,7 @@ void quo(); //quotient the top two entries
 
 void kill(); //destroy the top entry
 void clear(); //clear the stack completely
+void swap(); //swap the top two entries
 
 void ent_to_str(char* str, entry e1); //convert entry to string
 void show_two(char* str); //convert top of stack to string

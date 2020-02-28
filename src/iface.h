@@ -6,6 +6,8 @@
 #define U_STR_MAX 64
 #define CODE_STR_MAX 4
 
+int iface_exit = 0;
+
 enum internal_codes{
     app_c = 0,
 
@@ -17,6 +19,7 @@ enum internal_codes{
     kil_c,
     clr_c,
     shw_c,
+    swp_c,
     
     err_c
 };

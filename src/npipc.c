@@ -124,7 +124,20 @@ void kill(){
  * Empty the stack completely
  */
 void clear(){
-    stack_top = 0;
+    stack_top = -1;
+}
+
+void swap(){
+    //retrieve
+    entry e1;
+    e1.value = stack[stack_top].value;
+    e1.delta = stack[stack_top].delta;
+    entry e2;
+    e2.value = stack[stack_top-1].value;
+    e2.delta = stack[stack_top-1].delta;
+    stack_top = stack_top - 2;
+    append_entry(e1.value, e1.delta);
+    append_entry(e2.value, e2.delta);
 }
 
 /*

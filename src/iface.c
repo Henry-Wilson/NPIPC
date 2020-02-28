@@ -12,7 +12,13 @@
 void fetch_user_instruction(){
     printf("NPIPC >>");
     char *ustr = malloc(U_STR_MAX * sizeof(char));
-    fgets(ustr, U_STR_MAX, stdin);
+    char *result;
+    result = fgets(ustr, U_STR_MAX, stdin);
+    if(result == 0){ // null check
+        printf("\n%s\n", "EOF REACHED. EXIT.");
+        iface_exit = 1;
+        return;
+    }
     decode_user_instruction(ustr);
     free(ustr);
     return;
@@ -50,6 +56,8 @@ void decode_user_instruction(char *ustr){
     double delta = 0.0;
     if(strcmp(code, "app") == 0 || strcmp(code, "APP") == 0){ //append special
         internal_code = app_c;
+        sscanf(ustr, "%*s %lf %lf", &value, &delta);
+        //printf("DEBUG: VAL/DEL: %lf, %lf\n", value, delta);
         //find value and delta from string
         //separated by comma, one assumes.
     }
@@ -79,6 +87,10 @@ void decode_user_instruction(char *ustr){
             || strcmp(code, "shw") == 0 || strcmp(code, "SHW") == 0){
         internal_code = shw_c;
     }
+    else if(strcmp(code, "swa") == 0 || strcmp(code, "SWA") == 0
+            || strcmp(code, "swp") == 0 || strcmp(code, "SHW") == 0){
+        internal_code = swp_c;
+    }
 
     else { // error
         internal_code = err_c;
@@ -89,6 +101,13 @@ void decode_user_instruction(char *ustr){
 }
 
 void execute_npipc_instruction(ic internal_code , double v, double d){
+    if(internal_code != app_c && internal_code != err_c){
+        if(stack_top <= 0){
+            printf("%s %d %s\n", "Impossible: stack size", stack_top+1, "too small.");
+            return;
+        }
+    }
+    
     switch(internal_code){
         case app_c: //Append
             printf("Append...\n");
@@ -127,6 +146,10 @@ void execute_npipc_instruction(ic internal_code , double v, double d){
             printf("%s\n",ps);
             free(ps);
             break;
+        case swp_c:
+            printf("Swap top two...\n");
+            swap();
+            break;
 
         default: // Error
             printf("Malformed command!\n");
@@ -136,7 +159,8 @@ void execute_npipc_instruction(ic internal_code , double v, double d){
 
 void main(){
     ic inst;
-    while( 1 ){
+    while( !iface_exit ){
         fetch_user_instruction();
     }
+    return;
 }
