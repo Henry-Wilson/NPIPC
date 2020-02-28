@@ -17,7 +17,7 @@ typedef struct ent entry;
 #define STACK_MAX 16
 
 entry stack[STACK_MAX];
-int stack_top = -1;
+extern int stack_top; //defined in the npipc implementation
 
 void append_entry(double v, double d); //Add a new entry to the stack
 

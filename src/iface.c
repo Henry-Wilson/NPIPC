@@ -17,6 +17,7 @@ void fetch_user_instruction(){
     if(result == 0){ // null check
         printf("\n%s\n", "EOF REACHED. EXIT.");
         iface_exit = 1;
+        free(ustr);
         return;
     }
     decode_user_instruction(ustr);

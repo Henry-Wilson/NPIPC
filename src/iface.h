@@ -29,7 +29,3 @@ typedef enum internal_codes ic;
 void fetch_user_instruction();
 void decode_user_instruction(char *ustr);
 void execute_npipc_instruction(ic internal_code, double v, double d);
-
-/*
- * I think that might be it.
- */

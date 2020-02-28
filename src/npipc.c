@@ -16,6 +16,8 @@
 
 #include "npipc.h" //NPIPC API
 
+int stack_top = -1;
+
 /*
  * Put a new entry on the top of the stack
  */
