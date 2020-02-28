@@ -10,7 +10,7 @@
 #include "npipc.h"
 
 void fetch_user_instruction(){
-    printf("NPIPC >>");
+    printf("%s", "NPIPC >>");
     char *ustr = malloc(U_STR_MAX * sizeof(char));
     char *result;
     result = fgets(ustr, U_STR_MAX, stdin);
@@ -44,12 +44,6 @@ void decode_user_instruction(char *ustr){
     }
     code[CODE_STR_MAX-1] = '\0';
 
-    //Some debug prints
-    /*
-    printf("DECODE: DEBUG: USTR: %s",ustr);
-    printf("DECODE: DEBUG: CODE: %s\n",code);
-    */
-
     //declare ic var, if statements to assign
     //declare value and delta in case of append
     ic internal_code;
@@ -57,10 +51,8 @@ void decode_user_instruction(char *ustr){
     double delta = 0.0;
     if(strcmp(code, "app") == 0 || strcmp(code, "APP") == 0){ //append special
         internal_code = app_c;
+        //Space separated!!!
         sscanf(ustr, "%*s %lf %lf", &value, &delta);
-        //printf("DEBUG: VAL/DEL: %lf, %lf\n", value, delta);
-        //find value and delta from string
-        //separated by comma, one assumes.
     }
 
     else if(strcmp(code, "add") == 0 || strcmp(code, "ADD") == 0){ //arithmetic
@@ -111,49 +103,49 @@ void execute_npipc_instruction(ic internal_code , double v, double d){
     
     switch(internal_code){
         case app_c: //Append
-            printf("Append...\n");
+            printf("%s\n", "Append...");
             append_entry(v, d);
             break;
 
         case add_c: //Arithmetic
-            printf("Sum...\n");
+            printf("%s\n", "Sum...");
             add();
             break;
         case sub_c:
-            printf("Difference...\n");
+            printf("%s\n", "Difference...");
             sub();
             break;
         case mul_c:
-            printf("Product...\n");
+            printf("%s\n", "Product...");
             mul();
             break;
         case div_c:
-            printf("Quotient...\n");
+            printf("%s\n", "Quotient...");
             quo();
             break;
 
         case kil_c: //Stack manip
-            printf("Kill...\n");
+            printf("%s\n", "Kill...");
             kill();
             break;
         case clr_c:
-            printf("Clear...\n");
+            printf("%s\n", "Clear...");
             clear();
             break;
         case shw_c:
-            printf("Show stack...\n");
+            printf("%s\n", "Show stack...");
             char* ps = malloc(STR_MAX * sizeof(char));
             show_two(ps);
             printf("%s\n",ps);
             free(ps);
             break;
         case swp_c:
-            printf("Swap top two...\n");
+            printf("%s\n", "Swap top two...");
             swap();
             break;
 
         default: // Error
-            printf("Malformed command!\n");
+            printf("%s\n", "Malformed command!");
             break;
     }
 }
