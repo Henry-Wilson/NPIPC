@@ -4,9 +4,11 @@
  */
 
 #define U_STR_MAX 64
+#define CODE_STR_MAX 4
 
 enum internal_codes{
     app_c = 0,
+
     add_c,
     sub_c,
     mul_c,
@@ -14,7 +16,9 @@ enum internal_codes{
 
     kil_c,
     clr_c,
-    shw_c
+    shw_c,
+    
+    err_c
 };
 
 typedef enum internal_codes ic;
